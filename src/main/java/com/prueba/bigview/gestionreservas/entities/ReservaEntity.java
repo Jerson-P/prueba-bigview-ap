@@ -72,11 +72,13 @@ public class ReservaEntity implements Serializable {
     
     @Basic(optional = true)
     @Column(name = "fecha_creacion", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date fechaCreacion;
 
     @Basic(optional = true)
     @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date fechaModificacion;
 }

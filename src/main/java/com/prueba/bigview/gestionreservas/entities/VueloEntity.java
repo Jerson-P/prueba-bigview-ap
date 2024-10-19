@@ -16,6 +16,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -75,11 +77,13 @@ public class VueloEntity implements Serializable {
     
     @Basic(optional = true)
     @Column(name = "fecha_creacion", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date fechaCreacion;
 
     @Basic(optional = true)
     @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date fechaModificacion;
 }
