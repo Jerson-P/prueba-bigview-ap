@@ -67,8 +67,8 @@ public class PersonaEntity implements Serializable {
     private String telefono;
     
     @Basic(optional = true)
-    @Column(name = "activo")
-    private Boolean activo; 
+    @Column(name = "estado")
+    private Boolean estado; 
     
     @Basic(optional = true)
     @Column(name = "fecha_creacion", updatable = false)

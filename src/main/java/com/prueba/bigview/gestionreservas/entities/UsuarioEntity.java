@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Jerson
+ * @author Jerson Peña
  * @version 1.0
  * 
  * Clase que representa un usuario.

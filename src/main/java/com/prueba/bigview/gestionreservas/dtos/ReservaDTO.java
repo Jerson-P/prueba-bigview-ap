@@ -4,14 +4,15 @@ package com.prueba.bigview.gestionreservas.dtos;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.prueba.bigview.gestionreservas.enums.EstadoReserva;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * @author Jerson Peña
+ * @version 1.0
+ * 
  * Clase que representa un DTO de una reserva.
  * 
  * Este DTO se utiliza para transferir información sobre la reserva
@@ -27,9 +28,13 @@ public class ReservaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
 	private VueloDTO vuelo;
+	
 	private PersonaDTO persona;
+	
 	private Date fechaReserva;
+	
 	private String estado;
 
 }

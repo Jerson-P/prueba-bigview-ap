@@ -2,7 +2,7 @@ package com.prueba.bigview.gestionreservas.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,7 +22,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Jerson
+ * @author Jerson Peña
  * @version 1.0
  * 
  * Clase que representa un vuelo.
