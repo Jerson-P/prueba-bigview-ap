@@ -69,18 +69,19 @@ Esto generará un archivo .jar en el directorio target/, el cual puede ser utili
 
 El proyecto sigue una estructura estándar de Spring Boot:
 
-```gestionreservas/
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com.tuempresa.gestionreservas
-│   │   └── resources
-│   │       ├── application.properties
-│   │       └── static
-│   └── test
-├── pom.xml
-├── mvnw
-└── README.md```
+	```bash
+	gestionreservas/
+	├── src
+	│   ├── main
+	│   │   ├── java
+	│   │   │   └── com.tuempresa.gestionreservas
+	│   │   └── resources
+	│   │       ├── application.properties
+	│   │       └── static
+	│   └── test
+	├── pom.xml
+	├── mvnw
+	└── README.md```
 
 - **src/main/java**: Contiene el código fuente de la aplicación.
 - **src/main/resources**: Contiene los recursos de configuración (como el archivo application.properties).
