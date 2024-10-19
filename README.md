@@ -21,7 +21,7 @@ Las dependencias principales que el proyecto usa están definidas en el archivo 
 
 ### Clonar el Proyecto
 Puedes clonar el repositorio desde el control de versiones (Git):
-	```bash
+	```
 	git clone https://github.com/Jerson-P/prueba-bigview-api.git
 	cd prueba-bigview-api```
 
@@ -69,7 +69,7 @@ Esto generará un archivo .jar en el directorio target/, el cual puede ser utili
 
 El proyecto sigue una estructura estándar de Spring Boot:
 
-	```bash
+	```
 	gestionreservas/
 	├── src
 	│   ├── main
