@@ -76,7 +76,7 @@ El proyecto sigue una estructura estándar de Spring Boot:
 	├── src
 	│   ├── main
 	│   │   ├── java
-	│   │   │   └── com.tuempresa.gestionreservas
+	│   │   │   └── com.prueba.bigview.gestionreservas
 	│   │   └── resources
 	│   │       ├── application.properties
 	│   │       └── static
