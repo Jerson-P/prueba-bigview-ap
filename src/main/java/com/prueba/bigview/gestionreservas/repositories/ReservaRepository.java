@@ -1,5 +1,7 @@
 package com.prueba.bigview.gestionreservas.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,5 @@ import com.prueba.bigview.gestionreservas.entities.ReservaEntity;
 
 @Repository
 public interface ReservaRepository extends JpaRepository<ReservaEntity, Integer> {
-
+    List<ReservaEntity> findByPersona_Id(Integer idPersona);
 }

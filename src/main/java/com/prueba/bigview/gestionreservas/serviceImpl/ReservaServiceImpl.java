@@ -9,10 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.prueba.bigview.gestionreservas.dtos.ReservaDTO;
+import com.prueba.bigview.gestionreservas.dtos.ReservaRequestDTO;
 import com.prueba.bigview.gestionreservas.dtos.ResponseDTO;
+import com.prueba.bigview.gestionreservas.entities.PersonaEntity;
 import com.prueba.bigview.gestionreservas.entities.ReservaEntity;
+import com.prueba.bigview.gestionreservas.entities.VueloEntity;
 import com.prueba.bigview.gestionreservas.mappers.ReservaMapper;
+import com.prueba.bigview.gestionreservas.repositories.PersonaRepository;
 import com.prueba.bigview.gestionreservas.repositories.ReservaRepository;
+import com.prueba.bigview.gestionreservas.repositories.VueloRepository;
 import com.prueba.bigview.gestionreservas.service.IReservaService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,14 +36,30 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReservaServiceImpl implements IReservaService {
 	
-    private ReservaRepository reservaRepository;
+    private final ReservaRepository reservaRepository;
 
+    private final VueloRepository vueloRepository;
+
+    private final PersonaRepository personaRepository;
+    
     @Override
-    public ResponseEntity<ResponseDTO> guardarReserva(final ReservaDTO reservaDTO) {
-        ReservaEntity reservaEntity = ReservaMapper.INSTANCE.dtoToEntity(reservaDTO);
+    public ResponseEntity<ResponseDTO> guardarReserva(final ReservaRequestDTO reservaRequestDTO) {
+        VueloEntity vueloEntity = vueloRepository.findById(reservaRequestDTO.getIdVuelo())
+            .orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
+        PersonaEntity personaEntity = personaRepository.findById(reservaRequestDTO.getIdPersona())
+            .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+        ReservaEntity reservaEntity = ReservaEntity.builder()
+            .vuelo(vueloEntity)
+            .persona(personaEntity)
+            .fechaReserva(reservaRequestDTO.getFechaReserva())
+            .estado(reservaRequestDTO.getEstado())
+            .build();
+
         reservaEntity = reservaRepository.save(reservaEntity);
+
         ReservaDTO savedReservaDTO = ReservaMapper.INSTANCE.entityToDto(reservaEntity);
-        log.info("sigue");
+
         return ResponseEntity.ok(
             ResponseDTO.builder()
                 .statusCode(HttpStatus.OK.value())
@@ -47,6 +68,7 @@ public class ReservaServiceImpl implements IReservaService {
                 .build()
         );
     }
+
 
     @Override
     public ResponseEntity<ResponseDTO> obtenerReservas() {
@@ -132,5 +154,32 @@ public class ReservaServiceImpl implements IReservaService {
             );
         }
     }
+    
+    @Override
+    public ResponseEntity<ResponseDTO> obtenerReservasPorPersonaId(final Integer idPersona) {
+        List<ReservaEntity> reservas = reservaRepository.findByPersona_Id(idPersona);
+        
+        if (reservas.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ResponseDTO.builder()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .message("No se encontraron reservas para la persona con ID " + idPersona)
+                    .build()
+            );
+        }
+
+        List<ReservaDTO> reservaDTOs = reservas.stream()
+            .map(ReservaMapper.INSTANCE::entityToDto)
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(
+            ResponseDTO.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Reservas obtenidas exitosamente")
+                .objectResponse(reservaDTOs)
+                .build()
+        );
+    }
+
 
 }

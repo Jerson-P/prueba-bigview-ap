@@ -3,6 +3,7 @@ package com.prueba.bigview.gestionreservas.service;
 import org.springframework.http.ResponseEntity;
 
 import com.prueba.bigview.gestionreservas.dtos.ReservaDTO;
+import com.prueba.bigview.gestionreservas.dtos.ReservaRequestDTO;
 import com.prueba.bigview.gestionreservas.dtos.ResponseDTO;
 
 /**
@@ -17,7 +18,7 @@ import com.prueba.bigview.gestionreservas.dtos.ResponseDTO;
 
 public interface IReservaService {
 	
-	ResponseEntity<ResponseDTO> guardarReserva(final ReservaDTO reserva);
+	ResponseEntity<ResponseDTO> guardarReserva(final ReservaRequestDTO reservaRequestDTO);
 	
     ResponseEntity<ResponseDTO> obtenerReservas();
     
@@ -26,4 +27,7 @@ public interface IReservaService {
     ResponseEntity<ResponseDTO> actualizarReserva(Integer id, final ReservaDTO reserva);
     
     ResponseEntity<ResponseDTO> eliminarReserva(Integer id);
+    
+    ResponseEntity<ResponseDTO> obtenerReservasPorPersonaId(Integer id);
+    
 }

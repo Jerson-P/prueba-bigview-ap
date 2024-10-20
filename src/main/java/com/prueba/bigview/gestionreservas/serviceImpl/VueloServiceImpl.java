@@ -34,6 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 public class VueloServiceImpl implements IVueloService {
 
 	private final VueloRepository vueloRepository;
+	
+	private final VueloMapper vueloMapper;
 
     @Override
     public ResponseEntity<ResponseDTO> guardarVuelo(final VueloDTO vueloDTO) {
@@ -53,9 +55,10 @@ public class VueloServiceImpl implements IVueloService {
 
     @Override
     public ResponseEntity<ResponseDTO> obtenerVuelos() {
+        // Usamos la inyección de VueloMapper en lugar de INSTANCE
         List<VueloEntity> vuelos = vueloRepository.findAll();
         List<VueloDTO> vueloDTOs = vuelos.stream()
-            .map(VueloMapper.INSTANCE::entityToDto)
+            .map(vueloMapper::entityToDto)  // Usamos el mapper inyectado
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(

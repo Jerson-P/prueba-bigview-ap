@@ -23,7 +23,9 @@ Las dependencias principales que el proyecto usa están definidas en el archivo 
 Puedes clonar el repositorio desde el control de versiones (Git):
 	```
 	git clone https://github.com/Jerson-P/prueba-bigview-api.git
+	
 	cd prueba-bigview-api```
+	
 
 ### Configurar la Base de Datos (SQL Server)
 

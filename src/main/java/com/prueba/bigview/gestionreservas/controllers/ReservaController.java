@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prueba.bigview.gestionreservas.dtos.ReservaDTO;
+import com.prueba.bigview.gestionreservas.dtos.ReservaRequestDTO;
 import com.prueba.bigview.gestionreservas.dtos.ResponseDTO;
 import com.prueba.bigview.gestionreservas.serviceImpl.ReservaServiceImpl;
 
@@ -41,19 +42,20 @@ public class ReservaController {
 
 	private final ReservaServiceImpl reservaService;
 
-    @Operation(summary = "Operación que permite crear una reserva")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se ha guardado satisfactoriamente", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
-            @ApiResponse(responseCode = "400", description = "La petición no puede ser entendida por el servidor debido a errores de sintaxis", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
-            @ApiResponse(responseCode = "500", description = "Se presentó una condición inesperada que impidió completar la petición", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
-    })
-    @PostMapping
-    public ResponseEntity<ResponseDTO> guardarReserva(@RequestBody ReservaDTO reservaDTO) {
-        return this.reservaService.guardarReserva(reservaDTO);
-    }
+	@Operation(summary = "Operación que permite crear una reserva")
+	@ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "Se ha guardado satisfactoriamente", content = {
+	                @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
+	        @ApiResponse(responseCode = "400", description = "La petición no puede ser entendida por el servidor debido a errores de sintaxis", content = {
+	                @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
+	        @ApiResponse(responseCode = "500", description = "Se presentó una condición inesperada que impidió completar la petición", content = {
+	                @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
+	})
+	@PostMapping
+	public ResponseEntity<ResponseDTO> guardarReserva(@RequestBody ReservaRequestDTO reservaRequestDTO) {
+	    return this.reservaService.guardarReserva(reservaRequestDTO);
+	}
+
 
     @Operation(summary = "Operación que permite obtener todas las reservas")
     @ApiResponses(value = {
@@ -108,4 +110,19 @@ public class ReservaController {
     public ResponseEntity<ResponseDTO> eliminarReserva(@PathVariable Integer id) {
         return this.reservaService.eliminarReserva(id);
     }
+    
+    @Operation(summary = "Obtener reservas por ID de persona")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Reservas obtenidas satisfactoriamente", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
+        @ApiResponse(responseCode = "404", description = "No se encontraron reservas para la persona", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
+        @ApiResponse(responseCode = "500", description = "Se presentó una condición inesperada que impidió completar la petición", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDTO.class))}),
+    })
+    @GetMapping("/persona/{idPersona}/reservas")
+    public ResponseEntity<ResponseDTO> obtenerReservasPorPersonaId(@PathVariable Integer idPersona) {
+        return reservaService.obtenerReservasPorPersonaId(idPersona);
+    }
+
 }

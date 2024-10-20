@@ -2,16 +2,19 @@ package com.prueba.bigview.gestionreservas.serviceImpl;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.prueba.bigview.gestionreservas.dtos.LoginResponseDTO;
 import com.prueba.bigview.gestionreservas.dtos.ResponseDTO;
 import com.prueba.bigview.gestionreservas.dtos.UsuarioDTO;
 import com.prueba.bigview.gestionreservas.entities.UsuarioEntity;
 import com.prueba.bigview.gestionreservas.mappers.UsuarioMapper;
 import com.prueba.bigview.gestionreservas.repositories.UsuarioRepository;
 import com.prueba.bigview.gestionreservas.service.IUsuarioService;
+import com.prueba.bigview.gestionreservas.utils.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 public class UsuarioServiceImpl implements IUsuarioService {
 	
 	private final UsuarioRepository usuarioRepository;
+	
+	@Autowired
+    private JwtUtil jwtUtil;
     
     @Override
     public ResponseEntity<ResponseDTO> guardarUsuario(final UsuarioDTO usuarioDTO) {
@@ -74,12 +80,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
         if (usuarioOpt.isPresent()) {
             UsuarioEntity usuarioEntity = usuarioOpt.get();
             if (usuarioEntity.getContrasena().equals(contrasena)) {
-                UsuarioDTO usuarioDTO = UsuarioMapper.INSTANCE.entityToDto(usuarioEntity);
+                String token = jwtUtil.generateToken(correo);
+
+                LoginResponseDTO loginResponse = new LoginResponseDTO();
+                loginResponse.setIdUsuario(usuarioEntity.getId().toString());
+                loginResponse.setCorreo(correo);
+                loginResponse.setToken(token);
+
                 return ResponseEntity.ok(
                     ResponseDTO.builder()
                         .statusCode(HttpStatus.OK.value())
                         .message("Autenticación exitosa")
-                        .objectResponse(usuarioDTO)
+                        .objectResponse(loginResponse)
                         .build()
                 );
             } else {
@@ -99,5 +111,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
             );
         }
     }
+
 
 }
