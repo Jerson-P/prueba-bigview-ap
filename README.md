@@ -21,10 +21,10 @@ Las dependencias principales que el proyecto usa están definidas en el archivo 
 
 ### Clonar el Proyecto
 Puedes clonar el repositorio desde el control de versiones (Git):
-	```
-	git clone https://github.com/Jerson-P/prueba-bigview-api.git
-	
-	cd prueba-bigview-api```
+```bash
+git clone https://github.com/Jerson-P/prueba-bigview-api.git
+cd prueba-bigview-api
+```
 	
 
 ### Configurar la Base de Datos (SQL Server)
@@ -88,6 +88,56 @@ El proyecto sigue una estructura estándar de Spring Boot:
 - **src/main/java**: Contiene el código fuente de la aplicación.
 - **src/main/resources**: Contiene los recursos de configuración (como el archivo application.properties).
 - **pom.xml**: Archivo de configuración de Maven, donde se gestionan las dependencias.
+
+## Ejemplos de Uso de la API
+
+### Búsqueda de Vuelos:
+
+- **Endpoint**: /api/vuelos/buscar
+- **Método**: POST
+- **Descripción**: Obtiene una lista de vuelos disponibles basados en los filtros opcionales de origen, destino, y fecha de salida.
+
+```json
+{
+  "origen": "Bogotá",
+  "destino": "Medellín",
+  "fechaSalida": "2024-11-01"
+}
+
+```
+
+### Reserva de Vuelo::
+
+- **Endpoint**: /api/reservas
+- **Método**: POST
+- **Descripción**: Realiza una reserva para un vuelo seleccionado por el usuario.
+
+```json
+{
+  "idVuelo": 12,
+  "idPersona": 1,
+  "fechaReserva": "2024-11-01",
+  "estado": "pendiente"
+}
+
+```
+
+## Ejecutar Pruebas
+
+Este proyecto también incluye un conjunto de pruebas unitarias para garantizar la estabilidad y el correcto funcionamiento de las funcionalidades principales.
+
+### Cómo Ejecutar las Pruebas
+
+Para ejecutar las pruebas del proyecto, sigue estos pasos:
+
+1. Ejecuta el siguiente comando Maven para ejecutar las pruebas:
+
+```bash
+
+./mvnw test
+
+```
+-Esto ejecutará todas las pruebas unitarias y de integración definidas en el proyecto.
 
 ## Contacto
 
